@@ -19,7 +19,7 @@ public class StandartMenu implements Menu {
         dishes.add(new Dish("Салат болгарский вегетарианский", 250, 21));
         dishes.add(new Dish("Рыбное филе с помидоркой", 80, 54));
         dishes.add(new Dish("Печень по королевски", 150, 54));
-        dishes.add(new Dish("Свинина зпеченая \"По-гусарски\"", 80, 68));
+        dishes.add(new Dish("Свинина запеченая \"По-гусарски\"", 80, 68));
         dishes.add(new Dish("Греча с маслом", 170, 17));
         dishes.add(new Dish("Макароны отварные", 170, 15));
         dishes.add(new Dish("Рис отварной с маслом", 170, 16));

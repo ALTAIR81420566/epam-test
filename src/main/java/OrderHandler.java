@@ -29,16 +29,14 @@ public class OrderHandler {
                     "Чтобы вывести отчет введите   R\n" +
                     "Для выхода из программы введите   Q\n");
 
-            String answer = scanner.nextLine();
-            if(answer.trim().toUpperCase().equals("E")){
+            String answer = scanner.nextLine().trim().toUpperCase();
+
+            if(answer.equals("E")){
                 createOrder();
-
-            } else if(answer.trim().toUpperCase().equals("R")){
+            } else if(answer.equals("R")){
                 printGeneralReport();
-
-            }else if(answer.trim().toUpperCase().equals("Q")){
+            }else if(answer.equals("Q")){
                 isFinish = true;
-
             }else{
                 System.err.println("Неверная команда");
                 continue;
@@ -49,31 +47,34 @@ public class OrderHandler {
 
     }
 
+    //Makes a name of 60 characters long, for a even showing
+    private String makeName(String name){
+        StringBuilder nameBuilder = new StringBuilder();
+        if (name.length() > 60) {
+            name = name.substring(0, 55);
+            name += "...";
+        }
+
+        nameBuilder.append(name);
+        while (nameBuilder.length() < 60) {
+            nameBuilder.append(" ");
+        }
+        return  nameBuilder.toString();
+    }
+
+
     private void printGeneralReport() {
         if(!orders.isEmpty()) {
             System.out.println("Информация о всех заказах для раздачи заказанных блюд сотрудникам: \n");
             StringBuilder reportStr = new StringBuilder();
-            StringBuilder nameBuilder = new StringBuilder();
-            int i = 0;
+
             for(Order order : orders) {
                 System.out.println("Заказчик: " + order.getEmployeeName());
                 for (Map.Entry<Dish, Integer> dish : order.getDishes().entrySet()) {
 
-                    String name = dish.getKey().getName();
-                    if (name.length() > 60) {
-                        name = name.substring(0, 55);
-                        name += "...";
-                    }
+                    String name = makeName(dish.getKey().getName());
+                    reportStr.append(name).append("x").append(dish.getValue()).append("\n");
 
-                    nameBuilder.append(name);
-                    while (nameBuilder.length() < 60) {
-                        nameBuilder.append(" ");
-                    }
-
-                    reportStr.append(nameBuilder).append("x").append(dish.getValue()).append("\n");
-
-                    nameBuilder.delete(0, reportStr.length());
-                    i++;
                 }
                 reportStr.append("Общая стоимость заказа: ").append(order.getTotalCost()).append("руб")
                 .append("\n----------------");
@@ -95,19 +96,12 @@ public class OrderHandler {
         System.out.println("Заказчик: " + order.getEmployeeName());
         for(Map.Entry<Dish, Integer> dish : order.getDishes().entrySet()){
 
-            String name = dish.getKey().getName();
-            if(name.length() > 60){
-                name = name.substring(0, 55);
-                name += "...";
-            }
+            String name = makeName(dish.getKey().getName());
 
-            nameBuilder.append(name);
-            while (nameBuilder.length() < 60){
-                nameBuilder.append(" ");
-            }
-
-            reportStr.append(nameBuilder).append(" вес: ").append(dish.getKey().getWeight()).append(" гр.").append("\tцена: ")
-                    .append(dish.getKey().getCost()).append("руб.\t").append("x").append(dish.getValue()).append("\n");
+            reportStr.append(nameBuilder).append(" вес: ").append(dish.getKey()
+                    .getWeight()).append(" гр.").append("\tцена: ")
+                    .append(dish.getKey().getCost()).append("руб.\t")
+                    .append("x").append(dish.getValue()).append("\n");
 
             nameBuilder.delete(0,nameBuilder.length());
             i++;
@@ -129,10 +123,12 @@ public class OrderHandler {
 
         System.out.println("Вводите код заказа блюд по одному. Когда закончите, введите X\n");
 
-        while (true){
+        boolean isContinue = true;
+
+        while (isContinue){
             System.out.println("Введите код\n");
-            String answer = scanner.nextLine();
-            if (answer.toUpperCase().trim().equals("X")){
+            String answer = scanner.nextLine().toUpperCase().trim();
+            if (answer.equals("X")){
                 if(!order.isEmpty()) {
                     orders.add(order);
                     System.out.println("Спасибо за заказ!");
@@ -140,20 +136,22 @@ public class OrderHandler {
                 }else {
                     System.out.println("Очень жаль, вы ничего не заказали");
                 }
-                break;
+                isContinue = false;
             }
             try {
                 int dishNumber = Integer.parseInt(answer);
                 if (dishNumber >  -1 && dishNumber < menu.getDishes().size()){
-                    int dishCount;
+                    int dishCount = 0;
 
-                    while (true) {
+                    boolean isIncorrectInput = true;
+
+                    while (isIncorrectInput) {
                         System.out.println("Введите количество блюд\n");
                         answer = scanner.nextLine();
 
                          dishCount = Integer.parseInt(answer);
                          if (dishCount > 0){
-                             break;
+                             isIncorrectInput = false;
                          }else {
                              System.err.println("Неверное значение!!!");
                          }
@@ -182,16 +180,7 @@ public class OrderHandler {
 
         for(Dish dish: menu.getDishes()){
 
-            String name = dish.getName();
-            if(name.length() > 60){
-                name = name.substring(0, 55);
-                name += "...";
-            }
-
-            nameBuilder.append(name);
-            while (nameBuilder.length() < 60){
-                nameBuilder.append(" ");
-            }
+            String name = makeName(dish.getName());
 
             menuStr.append(nameBuilder).append(" вес: ").append(dish.getWeight()).append(" гр.").append("\tцена: ")
                     .append(dish.getCost()).append("руб.\t").append("код заказа: ").append(i).append("\n");
