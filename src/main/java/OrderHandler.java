@@ -35,9 +35,8 @@ public class OrderHandler {
         System.out.println(HELLO + "\n");
         showMenu();
 
-        while (isFinish == false) {
-            handler();
-        }
+        handler();
+
         scanner.close();
     }
 
@@ -46,26 +45,22 @@ public class OrderHandler {
     }
 
     private void handler(){
+        String answer;
 
-        while (!isFinish) {
-
+        do{
             System.out.println(MAINMENU);
 
-            String answer = scanner.nextLine().trim().toUpperCase();
+            answer = scanner.nextLine().trim().toUpperCase();
 
             if(answer.equals("E")){
                 createOrder();
             } else if(answer.equals("R")){
                 printGeneralReport();
-            }else if(answer.equals("Q")){
-                isFinish = true;
-            }else{
+            }else if(!answer.equals("Q")){
                 System.err.println(INCORRCOMMAND);
-                continue;
             }
-
         }
-
+        while (!answer.equals("Q"));
 
     }
 
@@ -113,7 +108,6 @@ public class OrderHandler {
         System.out.println(ORDERINFO);
         StringBuilder reportStr =  new StringBuilder();
         StringBuilder nameBuilder = new StringBuilder();
-        int i = 0;
 
         System.out.println(EMPLOYEE + order.getEmployeeName());
         for(Map.Entry<Dish, Integer> dish : order.getDishes().entrySet()){
@@ -126,7 +120,7 @@ public class OrderHandler {
                     .append("x").append(dish.getValue()).append("\n");
 
             nameBuilder.delete(0,nameBuilder.length());
-            i++;
+
         }
         reportStr.append(TOTALCOST).append(order.getTotalCost()).append(RUB);
         System.out.println(reportStr);
@@ -145,11 +139,11 @@ public class OrderHandler {
 
         System.out.println(ORDERINSTRUCTION);
 
-        boolean isContinue = true;
+        String answer;
 
-        while (isContinue){
+        do{
             System.out.println(ENTHERCODE + "\n");
-            String answer = scanner.nextLine().toUpperCase().trim();
+            answer = scanner.nextLine().toUpperCase().trim();
             if (answer.equals("X")){
                 if(!order.isEmpty()) {
                     orders.add(order);
@@ -158,40 +152,35 @@ public class OrderHandler {
                 }else {
                     System.out.println(PITY);
                 }
-                isContinue = false;
-                break;
-            }
-            try {
-                int dishNumber = Integer.parseInt(answer);
-                if (dishNumber >  -1 && dishNumber < menu.getDishes().size()){
-                    int dishCount = 0;
+            }else {
+                try {
+                    int dishNumber = Integer.parseInt(answer);
+                    if (dishNumber > -1 && dishNumber < menu.getDishes().size()) {
+                        int dishCount = 0;
 
-                    boolean isIncorrectInput = true;
+                        do{
+                            System.out.println(DISHNUM + "\n");
+                            answer = scanner.nextLine();
 
-                    while (isIncorrectInput) {
-                        System.out.println(DISHNUM+ "\n");
-                        answer = scanner.nextLine();
+                            dishCount = Integer.parseInt(answer);
+                            if (dishCount <= 0) {
+                                System.err.println(INCORRCOMMAND);
+                            }
+                        }
+                        while (dishCount <= 0);
 
-                         dishCount = Integer.parseInt(answer);
-                         if (dishCount > 0){
-                             isIncorrectInput = false;
-                         }else {
-                             System.err.println(INCORRCOMMAND);
-                         }
+                        Dish dish = menu.getDishes().get(dishNumber);
+
+                        order.addDish(dish, dishCount);
+                    } else {
+                        System.err.println(INCORRCOMMAND);
                     }
-
-                    Dish dish = menu.getDishes().get(dishNumber);
-
-                    order.addDish(dish, dishCount);
-                }else{
+                } catch (Exception e) {
                     System.err.println(INCORRCOMMAND);
                 }
-            }catch (Exception e){
-                System.err.println(INCORRCOMMAND);
             }
-
         }
-
+        while (!answer.equals("X"));
 
     }
 
