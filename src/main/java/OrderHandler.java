@@ -4,7 +4,6 @@ public class OrderHandler {
 
     private Menu menu;
     private List<Order> orders =  new ArrayList<>();
-    private boolean isFinish = false;
     private Scanner scanner = new Scanner(System.in);
 
     private final String HELLO = "Hello! ";
@@ -64,39 +63,18 @@ public class OrderHandler {
 
     }
 
-    //Makes a name of 60 characters long, for a even showing
-    private String makeName(String name){
-        StringBuilder nameBuilder = new StringBuilder();
-        if (name.length() > 60) {
-            name = name.substring(0, 55);
-            name += "...";
-        }
-
-        nameBuilder.append(name);
-        while (nameBuilder.length() < 60) {
-            nameBuilder.append(" ");
-        }
-        return  nameBuilder.toString();
-    }
-
-
     private void printGeneralReport() {
         if(!orders.isEmpty()) {
             System.out.println(HEADOFREPORT);
-            StringBuilder reportStr = new StringBuilder();
 
             for(Order order : orders) {
                 System.out.println(EMPLOYEE + order.getEmployeeName());
                 for (Map.Entry<Dish, Integer> dish : order.getDishes().entrySet()) {
 
-                    String name = makeName(dish.getKey().getName());
-                    reportStr.append(name).append("x").append(dish.getValue()).append("\n");
+                    System.out.printf("%-60s x%d\n", dish.getKey().getName(),dish.getValue());
 
                 }
-                reportStr.append(TOTALCOST).append(order.getTotalCost()).append(RUB)
-                .append("\n----------------");
-                System.out.println(reportStr);
-                reportStr.delete(0,reportStr.length());
+                System.out.printf("%s%s%s\n---------------\n", TOTALCOST, order.getTotalCost(),RUB);
             }
         }else {
             System.out.println(EMPTYLIST);
@@ -105,26 +83,16 @@ public class OrderHandler {
     }
 
     private void printReportForDinningRoom(Order order) {
-        System.out.println(ORDERINFO);
-        StringBuilder reportStr =  new StringBuilder();
-        StringBuilder nameBuilder = new StringBuilder();
+        System.out.println(ORDERINFO+"\n");
 
         System.out.println(EMPLOYEE + order.getEmployeeName());
         for(Map.Entry<Dish, Integer> dish : order.getDishes().entrySet()){
 
-            String name = makeName(dish.getKey().getName());
-
-            reportStr.append(name).append(WEIGHT).append(dish.getKey()
-                    .getWeight()).append(GRAMM).append("\t").append(COST)
-                    .append(dish.getKey().getCost()).append(RUB).append("\t")
-                    .append("x").append(dish.getValue()).append("\n");
-
-            nameBuilder.delete(0,nameBuilder.length());
+            System.out.printf("%-60s %s %-4d%s\t %s %-3d%s\t x%d\n", dish.getKey().getName(),
+                    WEIGHT,dish.getKey().getWeight(),GRAMM,COST,dish.getKey().getCost(),RUB,dish.getValue());
 
         }
-        reportStr.append(TOTALCOST).append(order.getTotalCost()).append(RUB);
-        System.out.println(reportStr);
-
+        System.out.printf("%s%s%s", TOTALCOST, order.getTotalCost(),RUB);
     }
 
     private void createOrder() {
@@ -186,23 +154,14 @@ public class OrderHandler {
 
     private void showMenu(){
         System.out.println( TODAYMENU + "\n");
-        StringBuilder menuStr =  new StringBuilder();
-        StringBuilder nameBuilder = new StringBuilder();
         int i = 0;
 
         for(Dish dish: menu.getDishes()){
 
-            String name = makeName(dish.getName());
-
-            menuStr.append(name).append(WEIGHT)
-                    .append(dish.getWeight()).append(GRAMM).append("\t").append(COST)
-                    .append(dish.getCost()).append(RUB).append("\t").append(ORDERCODE)
-                    .append(i).append("\n");
-
-            nameBuilder.delete(0,60);
+            System.out.printf("%-60s %s %-4d%s\t %s %-3d%s\t %s %d\n", dish.getName(),
+                    WEIGHT,dish.getWeight(),GRAMM,COST,dish.getCost(),RUB,ORDERCODE,i);
             i++;
         }
-        System.out.println(menuStr);
     }
 
 }

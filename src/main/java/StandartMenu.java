@@ -14,7 +14,7 @@ public class StandartMenu implements Menu {
         dishes.add(new Dish("Салат изюминка", 100, 35));
         dishes.add(new Dish("Салат лукошко", 100, 40));
         dishes.add(new Dish("Салат Капустный с помидором", 100, 19));
-        dishes.add(new Dish("Салат харчно с говядиной", 250, 31));
+        dishes.add(new Dish("Салат харчо с говядиной", 250, 31));
         dishes.add(new Dish("Салат куриный с грибами", 250, 34));
         dishes.add(new Dish("Салат болгарский вегетарианский", 250, 21));
         dishes.add(new Dish("Рыбное филе с помидоркой", 80, 54));
