@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ordersList>
+	<order>
+		<employee>Пупкин А.</employee>
+		<dishes>
+			<dish>Салат Изюминка</dish>
+			<dish>Печень по королевски</dish>
+			<dish>Рис отварной с маслом</dish>
+			<dish>Рулет с изюмом</dish>
+		</dishes>
+	</order>
+	<order>
+		<employee>Кривенко С.</employee>
+		<dishes>
+			<dish>Салат Лукошко</dish>
+			<dish>Суп куриный с грибами</dish>
+			<dish>Свинина запеченная "По-гусарски"</dish>
+			<dish>Макароны отварные</dish>
+			<dish>Пирог с яблоками</dish>
+		</dishes>
+	</order>
+	<order>
+		<employee>Гайченов П.</employee>
+		<dishes>
+			<dish>Суп болгарский вегетарианский</dish>
+			<dish>Рыбное филе с помидоркой</dish>
+			<dish>Рулет с изюмом</dish>
+			<dish>Пирог с повидлом</dish>
+		</dishes>
+	</order>
+	<order>
+		<employee>Сухожилов Л.</employee>
+		<dishes>
+			<dish>Салат Изюминка</dish>
+			<dish>Суп куриный с грибами</dish>
+			<dish>Печень по королевски</dish>
+			<dish>Пирог с повидлом</dish>
+		</dishes>
+	</order>
+
+</ordersList>

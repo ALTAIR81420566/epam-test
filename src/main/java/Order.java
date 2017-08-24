@@ -1,24 +1,25 @@
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Order {
 
     private String employeeName;
     private int totalCost;
-    private HashMap<Dish, Integer> dishes =  new HashMap<>();
+    private List<Dish> dishes =  new ArrayList<>();
 
     public Order(String employeeName){
         this.employeeName = employeeName;
     }
 
-    public void addDish(Dish dish, int count){
-        dishes.put(dish,count);
-        totalCost += dish.getCost() * count;
+    public void addDish(Dish dish){
+        dishes.add(dish);
+        totalCost += dish.getCost();
     }
 
     public boolean isEmpty(){
         return dishes.isEmpty();
     }
-    public HashMap<Dish, Integer> getDishes() {
+    public List<Dish> getDishes() {
         return dishes;
     }
     public int getTotalCost() {
