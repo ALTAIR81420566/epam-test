@@ -24,8 +24,8 @@ public class OrderHandler {
     private final String HEADOFREPORT = "\n\nInformation about all orders for " +
             "distribution of ordered dishes to employees:\n";
 
-    public void start(){
-        List<Order> orders =  parse("orders.xml");
+    public void printReports(String path){
+        List<Order> orders =  parse(path);
         for (Order order : orders){
             printReportForDinningRoom(order);
         }
